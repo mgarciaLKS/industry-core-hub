@@ -109,6 +109,5 @@ keycloak:
     enabled: true
     hostname: "<keycloak-hostname>"
     annotations:
-      nginx.ingress.kubernetes.io/use-regex: "true"
       # cert-manager.io/cluster-issuer: "letsencrypt-prod"
     tls: false

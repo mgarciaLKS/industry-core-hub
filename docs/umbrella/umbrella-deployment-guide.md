@@ -73,9 +73,11 @@ For windows the easy way is to enable Kubernetes in Docker Desktop:
 1. Enable Kubernetes in Docker Desktop:
 - Navigate to Settings > Kubernetes and enable the Kubernetes option.
 
-2. Install an NGINX Ingress Controller:
+2. Install Traefik Ingress Controller:
 ```sh
-helm upgrade --install ingress-nginx ingress-nginx --repo https://kubernetes.github.io/ingress-nginx --namespace ingress-nginx --create-namespace
+helm repo add traefik https://traefik.github.io/charts
+helm repo update
+helm upgrade --install traefik traefik/traefik --namespace traefik --create-namespace
 ```
 Use 127.0.0.1 as the Cluster IP and manually configure ingress.
 
@@ -100,8 +102,12 @@ minikube dashboard
 ### 2. Enable Ingress Controller and Kubernetes Dashboard (Minikube Only)
 
 ```bash
-minikube addons enable ingress
-minikube addons enable ingress-dns
+# Install Traefik as ingress controller
+helm repo add traefik https://traefik.github.io/charts
+helm repo update
+helm install traefik traefik/traefik --namespace traefik --create-namespace
+
+# Enable additional addons
 minikube addons enable dashboard
 ```
 
@@ -114,7 +120,7 @@ echo "Minikube IP: $MINIKUBE_IP"
 
 ### 4. Configure DNS
 
-Add these entries to your `/etc/hosts` file (replace **192.168.49.2** with your Minikube IP, 192.168.49.2 is the default Minikube IP. Replace with **127.0.0.1** if you are using Docker Desktop with ingress-nginx controller):
+Add these entries to your `/etc/hosts` file (replace **192.168.49.2** with your Minikube IP, 192.168.49.2 is the default Minikube IP. Replace with **127.0.0.1** if you are using Docker Desktop with Traefik ingress controller):
 
 ```bash
 # Add to /etc/hosts

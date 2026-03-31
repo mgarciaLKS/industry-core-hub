@@ -39,7 +39,7 @@ pgadmin4:
     password: <path:industry-core-hub/data/pgadmin#password>
   ingress:
     enabled: true
-    ingressClassName: "nginx"
+    ingressClassName: "traefik"
     annotations:
       cert-manager.io/cluster-issuer: letsencrypt-prod
     hosts:
@@ -97,15 +97,11 @@ frontend:
     backendUrl: "https://backend-ichub.int.catena-x.net/v1"
   ingress:
       enabled: true
-      className: "nginx"
-      ## Optional annotations when using the nginx ingress class
+      className: "traefik"
+      ## Optional annotations when using the traefik ingress class
       annotations:
        cert-manager.io/cluster-issuer: letsencrypt-prod
-       nginx.ingress.kubernetes.io/rewrite-target: "/$1"
-       nginx.ingress.kubernetes.io/use-regex: "true"
-       nginx.ingress.kubernetes.io/enable-cors: "true"
       #   # -- Provide CORS allowed origin.
-      #   nginx.ingress.kubernetes.io/cors-allow-origin: "https://*.example.org"
       # -- Ingress TLS configuration
       tls:
        - secretName: "frontend-ichub.int.catena-x.net-tls"
@@ -119,8 +115,8 @@ frontend:
       hosts:
         - host: "frontend-ichub.int.catena-x.net"
           paths:
-            - path: /(.*)
-              pathType: ImplementationSpecific
+            - path: /
+              pathType: Prefix
               backend:
                 service: "frontend"
                 port: 8080
@@ -445,16 +441,11 @@ backend:
       apiPath: "/submodel-dispatcher"
   ingress:
       enabled: true
-      className: "nginx"
-      ## Optional annotations when using the nginx ingress class
+      className: "traefik"
+      ## Optional annotations when using the traefik ingress class
       annotations:
        cert-manager.io/cluster-issuer: letsencrypt-prod
-      #   nginx.ingress.kubernetes.io/rewrite-target: "/$1"
-      #   nginx.ingress.kubernetes.io/use-regex: "true"
-       nginx.ingress.kubernetes.io/enable-cors: "true"
       #   # -- Provide CORS allowed origin.
-       nginx.ingress.kubernetes.io/cors-allow-origin: "https://frontend-ichub.int.catena-x.net, *"
-       nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
       # -- Ingress TLS configuration
       tls:
        - secretName: "backend-ichub.int.catena-x.net-tls"
@@ -469,7 +460,7 @@ backend:
       - host: "backend-ichub.int.catena-x.net"
         paths:
           - path: /
-            pathType: ImplementationSpecific
+            pathType: Prefix
             backend:
               service: "backend"
               port: 8000
