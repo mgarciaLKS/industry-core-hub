@@ -107,7 +107,7 @@ backend:
       - host: "ichub-backend.tx.test"
         paths:
           - path: /
-            pathType: ImplementationSpecific
+            pathType: Prefix
             backend:
               service: "backend"
               port: 8000
@@ -132,7 +132,7 @@ frontend:
       - host: "ichub-frontend.tx.test"
         paths:
           - path: /
-            pathType: ImplementationSpecific
+            pathType: Prefix
             backend:
               service: "frontend"
               port: 8080

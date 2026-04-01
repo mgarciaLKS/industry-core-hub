@@ -52,6 +52,7 @@ Key Traefik documentation:
 | `values-jupiter.yaml` | className, annotations cleaned |
 | `values-saturn.yaml` | className, annotations cleaned |
 | `values-keycloak.yaml` | Removed `nginx.ingress.kubernetes.io/use-regex` annotation |
+| `values-local-deployment.yaml` | `pathType`: `ImplementationSpecific` → `Prefix` (backend + frontend) |
 | `README.md` | Updated auto‑generated docs tables |
 
 ### Deployment values (`deployment/`)
